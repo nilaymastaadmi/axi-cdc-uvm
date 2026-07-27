@@ -1,0 +1,6 @@
+build/
+obj_dir/
+dbgdir/
+*.vcd
+*.log
+__pycache__/
