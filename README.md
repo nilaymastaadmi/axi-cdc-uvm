@@ -25,6 +25,41 @@ than settling into a repeating pattern):
 
 Reproduce with `make test && make regress`.
 
+## The UVM environment, actually run
+
+`uvm/` was written against Xcelium's syntax but had never been compiled — there was no
+UVM simulator available until now. It has been run, on
+[EDA Playground](https://www.edaplayground.com/x/Dyac), on:
+
+```
+TOOL: xrun 25.03-s001
+```
+
+Cadence Xcelium 25.03-s001, UVM 1.2 (`CDNS-UVM-1.2 (25.03-s001)`), all three tests:
+
+| test | pushed | popped | mismatches | functional coverage | UVM_ERROR / UVM_FATAL |
+|---|---:|---:|---:|---:|---:|
+| `axi_random_test` | 102 | 102 | 0 | 100.00% | 0 / 0 |
+| `axi_fifo_full_test` | 147 | 147 | 0 | 70.83% | 0 / 0 |
+| `axi_error_test` | 0 | 0 | 0 | 52.08% | 0 / 0 |
+
+The coverage percentages are not unioned across tests the way the open-source
+regression unions across seeds — each number is that one test's covergroup in
+isolation, which is why `axi_fifo_full_test` (FIFO-kind transactions only) and
+`axi_error_test` (unmapped-kind only) each land well under 100%: they were never meant
+to close the whole model alone. Xcelium also disables covergroup sampling by default;
+getting a real number instead of a silent 0.00% needs `-coverage functional` on the
+compile line, which is not in the original command below and is easy to miss.
+
+`sva/axi_props.sv` had also never been compiled. It elaborated cleanly in all three
+runs — the `bind` into `cdc_bridge`, including the hierarchical references to
+`u_fifo.wgray` and `u_fifo.rgray`, resolved without error — and none of its assertions
+fired (`else $error(...)`) across any of the three transaction mixes above, alongside
+zero UVM_ERROR/UVM_FATAL from the scoreboard and coverage checks in the same runs.
+
+Getting here required one actual RTL fix, not just a testbench one: see the fourth
+entry under [Four defects the harness caught](#four-defects-the-harness-caught).
+
 ## What is being checked
 
 **The scoreboard owns correctness.** Expectations are registered by a monitor watching
@@ -72,10 +107,10 @@ consumer enable never stalls long enough to fill a 16-deep FIFO, so occupancy ne
 the low bins and the backpressure path went unexercised. Replacing it with a bursty
 consumer (run 15–50 cycles, stall 40–140) closed both.
 
-## Three defects the harness caught
+## Four defects the harness caught
 
-All three were found by the checkers rather than by reading waveforms, and each is
-recorded because how it presented is the useful part.
+All four were found by the checkers or the toolchain rather than by reading waveforms,
+and each is recorded because how it presented is the useful part.
 
 **Combinational loop between the FIFO flags and the pointer increment.** The first
 version computed `full` and `empty` combinationally from the incremented pointers. But
@@ -112,6 +147,23 @@ bin turns the coverage model into an active check on the testbench itself.
 Worth stating plainly: the design was correct through the second and third of these.
 The bug was in the thing doing the checking, which is the failure mode that quietly
 passes a broken design when it happens to fall the other way.
+
+**A declaration-order violation that two permissive tools let through.**
+`rtl/async_fifo.v` declared `empty_r`/`full_r` (the registered FIFO flags) roughly 90
+lines after `wire wbin_next = wbin + {..., (wr_en & ~full_r)}` and the equivalent for
+`empty_r` already referenced them — a forward reference to a `reg` that hadn't been
+declared yet, textually. Verilator 5.020 and Icarus 12.0 both elaborate this without
+complaint, which is how it shipped and passed the entire open-source regression.
+Xcelium's elaborator does not: net-declaration-style assigns (`wire x = expr`) are
+elaborated in textual order under SystemVerilog, so a reference to a not-yet-declared
+variable is `*E,UNDIDN: undeclared identifier` — and once that first reference fails,
+every later reference to the same symbol fails too, up to the point of its real
+declaration. The fix moved the `reg empty_r, full_r;` declaration ahead of both
+`always` blocks and both net-declaration assigns that use them — a pure reordering,
+same semantics, same synthesised logic — and is why the RTL in this repo no longer
+matches whatever was last checked in only against Verilator and Icarus. This is the
+kind of thing that only a second, stricter compiler catches: neither open-source tool
+was wrong to accept the file, and neither would have caught this without Xcelium.
 
 ## Area
 
@@ -162,6 +214,8 @@ uvm/    axi_if.sv         AXI4-Lite interface plus a passive CDC observation int
 
 scripts/regress.py        multi-seed regression, coverage unioned across seeds
         synth.ys          Yosys area run
+
+docs/   synchroniser_depth.md   MTBF derivation for the two-flop synchroniser
 ```
 
 ## Running it
@@ -175,21 +229,25 @@ make synth                   # cell and flip-flop counts
 make lint                    # Verilator lint
 ```
 
-UVM flow — needs Xcelium, VCS or Questa. EDA Playground is sufficient:
+UVM flow — needs Xcelium, VCS or Questa. EDA Playground is sufficient, and is what the
+results above were run on ([saved playground](https://www.edaplayground.com/x/Dyac)):
 
 ```
-xrun -uvm -sv -timescale 1ns/1ps rtl/*.v uvm/axi_if.sv uvm/axi_pkg.sv \
+xrun -uvm -sv -timescale 1ns/1ps -coverage functional rtl/*.v uvm/axi_if.sv uvm/axi_pkg.sv \
      uvm/tb_top_uvm.sv sva/axi_props.sv +UVM_TESTNAME=axi_random_test
 ```
 
-Available tests: `axi_random_test`, `axi_fifo_full_test`, `axi_error_test`.
+`-coverage functional` is not optional if you want the covergroup's `get_coverage()` to
+report anything other than a silent 0.00% — Xcelium leaves covergroup sampling disabled
+by default. Available tests: `axi_random_test`, `axi_fifo_full_test`, `axi_error_test`.
 
 ## Scope
 
 AXI4-Lite only: no bursts, no outstanding transactions, no ID fields, no protection or
 cache attributes. One outstanding write at a time. The FIFO is a single crossing rather
-than a full CDC strategy — no reset-domain crossing analysis, no MTBF budget, and the
-synchroniser depth is fixed at two rather than derived from a target failure rate.
+than a full CDC strategy — no reset-domain crossing analysis. The synchroniser depth is
+still fixed at two rather than swept, but it is no longer undefended: `docs/synchroniser_depth.md`
+works through the MTBF it actually buys for this design's own 100 MHz / 27 MHz clocks.
 Those are the honest next steps rather than oversights, and the checkers are written so
 they survive them: an out-of-order or multi-outstanding slave still has to satisfy every
 property in `sva/axi_props.sv` unchanged.

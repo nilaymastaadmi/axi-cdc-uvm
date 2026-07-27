@@ -36,6 +36,13 @@ module async_fifo #(
     // already finished writing, which the pointer handshake guarantees.
     reg [DW-1:0] mem [0:(1<<AW)-1];
 
+    // Registered full/empty flags, declared here (ahead of first use) because the
+    // net-declaration-style assigns below reference them: SystemVerilog elaborates
+    // those in textual order, so a forward reference to a not-yet-declared reg is an
+    // error under strict elaboration (Xcelium) even though Verilator and Icarus both
+    // tolerate it.
+    reg empty_r, full_r;
+
     // ------------------------------------------------------------- write pointers
     reg  [AW:0] wbin, wgray;
     wire [AW:0] wbin_next  = wbin + {{AW{1'b0}}, (wr_en & ~full_r)};
@@ -121,8 +128,6 @@ module async_fifo #(
     // inverting the top *two* bits rather than one. That is a consequence of the Gray
     // encoding reflecting about its midpoint, not an arbitrary trick.
     wire full_val  = (wgray_next == {~rgray_s2[AW:AW-1], rgray_s2[AW-2:0]});
-
-    reg empty_r, full_r;
 
     always @(posedge rclk or negedge rrst_n) begin
         if (!rrst_n) empty_r <= 1'b1;   // a FIFO comes out of reset empty
