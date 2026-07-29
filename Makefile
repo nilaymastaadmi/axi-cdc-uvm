@@ -1,4 +1,4 @@
-# AXI4-Lite CDC bridge: build, regression and synthesis.
+# AXI4 CDC bridge: build, regression and synthesis.
 #
 # `make test` runs the directed suite, `make regress` runs the constrained-random
 # regression and reports coverage as the union across seeds. Correctness is decided by
@@ -8,7 +8,7 @@ VERILATOR ?= verilator
 YOSYS     ?= yosys
 PYTHON    ?= python3
 
-RTL   := rtl/async_fifo.v rtl/axi4lite_slave.v rtl/cdc_bridge.v
+RTL   := rtl/async_fifo.v rtl/axi4_slave.v rtl/cdc_bridge.v
 TB    := tb/tb_cdc.sv
 BUILD := build
 SIM   := obj_dir/simv

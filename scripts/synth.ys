@@ -4,7 +4,7 @@
 # between modules rather than being a claim about any particular process.
 
 read_verilog rtl/async_fifo.v
-read_verilog rtl/axi4lite_slave.v
+read_verilog rtl/axi4_slave.v
 read_verilog rtl/cdc_bridge.v
 
 hierarchy -check -top cdc_bridge
@@ -20,7 +20,7 @@ proc; opt; fsm; opt; memory; opt; techmap; opt
 tee -o build/synth_async_fifo.txt stat
 
 design -reset
-read_verilog rtl/axi4lite_slave.v
-hierarchy -check -top axi4lite_slave
+read_verilog rtl/axi4_slave.v
+hierarchy -check -top axi4_slave
 proc; opt; fsm; opt; memory; opt; techmap; opt
-tee -o build/synth_axi4lite_slave.txt stat
+tee -o build/synth_axi4_slave.txt stat

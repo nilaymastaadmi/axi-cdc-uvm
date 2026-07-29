@@ -199,6 +199,7 @@ module tb_cdc;
     localparam ADDR_W  = 8;
     localparam DATA_W  = 32;
     localparam FIFO_AW = 4;
+    localparam ID_W    = 4;
     localparam DEPTH   = 1 << FIFO_AW;
     localparam PW      = ADDR_W + DATA_W;
 
@@ -212,20 +213,32 @@ module tb_cdc;
     reg aresetn = 0, bresetn = 0;
 
     reg  [ADDR_W-1:0]   awaddr;
+    reg  [ID_W-1:0]     awid;
+    reg  [7:0]          awlen;
+    reg  [2:0]          awsize;
+    reg  [1:0]          awburst;
     reg                 awvalid;
     wire                awready;
     reg  [DATA_W-1:0]   wdata;
     reg  [DATA_W/8-1:0] wstrb;
+    reg                 wlast;
     reg                 wvalid;
     wire                wready;
     wire [1:0]          bresp;
+    wire [ID_W-1:0]     bid;
     wire                bvalid;
     reg                 bready;
     reg  [ADDR_W-1:0]   araddr;
+    reg  [ID_W-1:0]     arid;
+    reg  [7:0]          arlen;
+    reg  [2:0]          arsize;
+    reg  [1:0]          arburst;
     reg                 arvalid;
     wire                arready;
     wire [DATA_W-1:0]   rdata;
     wire [1:0]          rresp;
+    wire [ID_W-1:0]     rid;
+    wire                rlast;
     wire                rvalid;
     reg                 rready;
 
@@ -234,13 +247,15 @@ module tb_cdc;
     wire [PW-1:0]       cons_data;
     wire [31:0]         cons_count;
 
-    cdc_bridge #(.ADDR_W(ADDR_W), .DATA_W(DATA_W), .FIFO_AW(FIFO_AW)) dut (
+    cdc_bridge #(.ADDR_W(ADDR_W), .DATA_W(DATA_W), .FIFO_AW(FIFO_AW), .ID_W(ID_W)) dut (
         .aclk(aclk), .aresetn(aresetn),
-        .awaddr(awaddr), .awvalid(awvalid), .awready(awready),
-        .wdata(wdata), .wstrb(wstrb), .wvalid(wvalid), .wready(wready),
-        .bresp(bresp), .bvalid(bvalid), .bready(bready),
-        .araddr(araddr), .arvalid(arvalid), .arready(arready),
-        .rdata(rdata), .rresp(rresp), .rvalid(rvalid), .rready(rready),
+        .awaddr(awaddr), .awid(awid), .awlen(awlen), .awsize(awsize), .awburst(awburst),
+        .awvalid(awvalid), .awready(awready),
+        .wdata(wdata), .wstrb(wstrb), .wlast(wlast), .wvalid(wvalid), .wready(wready),
+        .bresp(bresp), .bid(bid), .bvalid(bvalid), .bready(bready),
+        .araddr(araddr), .arid(arid), .arlen(arlen), .arsize(arsize), .arburst(arburst),
+        .arvalid(arvalid), .arready(arready),
+        .rdata(rdata), .rresp(rresp), .rid(rid), .rlast(rlast), .rvalid(rvalid), .rready(rready),
         .bclk(bclk), .bresetn(bresetn), .consume_en(consume_en),
         .cons_valid(cons_valid), .cons_data(cons_data), .cons_count(cons_count)
     );
