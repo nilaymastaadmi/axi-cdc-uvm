@@ -1,5 +1,14 @@
 # axi-cdc-uvm
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nilaymastaadmi/axi-cdc-uvm/main/docs/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/nilaymastaadmi/axi-cdc-uvm/main/docs/banner-light.svg">
+  <img alt="A 100 MHz aclk domain crossing into an unrelated 27 MHz cclk domain through a gray-coded async FIFO. Both traces are drawn on one time axis, so the periods sit in their true 3.70 to 1 ratio." src="https://raw.githubusercontent.com/nilaymastaadmi/axi-cdc-uvm/main/docs/banner-light.svg" width="100%">
+</picture>
+
+<sub>Both traces share one time axis at 4 px/ns and scroll at the same speed, so the
+drawn periods are 40 px and 148.1 px: the true 100/27 ratio, not an eyeballed one.</sub>
+
 An AXI4-Lite slave whose write payloads cross into an unrelated clock domain through a
 Gray-coded asynchronous FIFO, verified against a scoreboard rather than by inspection.
 
