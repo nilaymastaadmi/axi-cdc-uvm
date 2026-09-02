@@ -246,7 +246,7 @@ by default. Available tests: `axi_random_test`, `axi_fifo_full_test`, `axi_error
 AXI4-Lite only: no bursts, no outstanding transactions, no ID fields, no protection or
 cache attributes. One outstanding write at a time. The FIFO is a single crossing rather
 than a full CDC strategy — no reset-domain crossing analysis. The synchroniser depth is
-still fixed at two rather than swept, but it is no longer undefended: `docs/synchroniser_depth.md`
+still fixed at two rather than swept, but it is no longer undefended: [`docs/synchroniser_depth.md`](docs/synchroniser_depth.md)
 works through the MTBF it actually buys for this design's own 100 MHz / 27 MHz clocks.
 Those are the honest next steps rather than oversights, and the checkers are written so
 they survive them: an out-of-order or multi-outstanding slave still has to satisfy every
