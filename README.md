@@ -34,7 +34,7 @@ than settling into a repeating pattern):
 
 Reproduce with `make test && make regress`.
 
-A retained open-source rerun on 12 October 2026, at source commit `9ffddc8`, used
+An earlier open-source rerun, retained on 12 October 2026 at source commit `9ffddc8`, used
 `python3 scripts/regress.py 100 400`: **11,415 transactions**, 1,266,336 procedural
 assertion checks, **0 mismatches / 0 assertion failures**, and 18/18 coverage bins
 across 100 seeds. [Per-seed log](docs/regression-2026-10-12.log) and
