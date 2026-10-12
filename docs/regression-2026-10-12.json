@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-12",
+  "source_commit": "9ffddc8bd2c93098e288f184b0870229e8903448",
+  "command": "python3 scripts/regress.py 100 400",
+  "seeds": 100,
+  "transactions": 11415,
+  "assertion_checks": 1266336,
+  "assertion_failures": 0,
+  "scoreboard_mismatches": 0,
+  "functional_coverage_bins": [
+    18,
+    18
+  ],
+  "flow": "open-source procedural-checker regression, not a new Xcelium/UVM run",
+  "retained_log": "regression-2026-10-12.log"
+}

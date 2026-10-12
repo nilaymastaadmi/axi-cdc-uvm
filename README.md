@@ -34,6 +34,15 @@ than settling into a repeating pattern):
 
 Reproduce with `make test && make regress`.
 
+A retained open-source rerun on 12 October 2026, at source commit `9ffddc8`, used
+`python3 scripts/regress.py 100 400`: **11,415 transactions**, 1,266,336 procedural
+assertion checks, **0 mismatches / 0 assertion failures**, and 18/18 coverage bins
+across 100 seeds. [Per-seed log](docs/regression-2026-10-12.log) and
+[machine-readable summary](docs/regression-2026-10-12.json) are retained. The table
+above is the earlier 11,495-transaction run; both runs support “over 11,400”. This
+new record is not a rerun of the historical Xcelium/UVM results below.
+
+
 ## The UVM environment, actually run
 
 `uvm/` was written against Xcelium's syntax but had never been compiled — there was no

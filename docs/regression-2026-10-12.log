@@ -1,0 +1,112 @@
+python3 scripts/regress.py 100 400
+seed   1  pass  txn=  131  cumulative bins 17/18  (+17)
+seed   2  pass  txn=  107  cumulative bins 18/18  (+1)
+seed   3  pass  txn=  120  cumulative bins 18/18
+seed   4  pass  txn=  144  cumulative bins 18/18
+seed   5  pass  txn=  104  cumulative bins 18/18
+seed   6  pass  txn=  101  cumulative bins 18/18
+seed   7  pass  txn=  114  cumulative bins 18/18
+seed   8  pass  txn=  146  cumulative bins 18/18
+seed   9  pass  txn=  111  cumulative bins 18/18
+seed  10  pass  txn=  134  cumulative bins 18/18
+seed  11  pass  txn=  133  cumulative bins 18/18
+seed  12  pass  txn=  106  cumulative bins 18/18
+seed  13  pass  txn=  100  cumulative bins 18/18
+seed  14  pass  txn=  128  cumulative bins 18/18
+seed  15  pass  txn=  107  cumulative bins 18/18
+seed  16  pass  txn=  126  cumulative bins 18/18
+seed  17  pass  txn=  143  cumulative bins 18/18
+seed  18  pass  txn=  123  cumulative bins 18/18
+seed  19  pass  txn=   93  cumulative bins 18/18
+seed  20  pass  txn=  102  cumulative bins 18/18
+seed  21  pass  txn=  127  cumulative bins 18/18
+seed  22  pass  txn=  124  cumulative bins 18/18
+seed  23  pass  txn=  127  cumulative bins 18/18
+seed  24  pass  txn=  113  cumulative bins 18/18
+seed  25  pass  txn=  136  cumulative bins 18/18
+seed  26  pass  txn=  135  cumulative bins 18/18
+seed  27  pass  txn=  121  cumulative bins 18/18
+seed  28  pass  txn=   99  cumulative bins 18/18
+seed  29  pass  txn=  116  cumulative bins 18/18
+seed  30  pass  txn=  109  cumulative bins 18/18
+seed  31  pass  txn=  107  cumulative bins 18/18
+seed  32  pass  txn=  112  cumulative bins 18/18
+seed  33  pass  txn=  104  cumulative bins 18/18
+seed  34  pass  txn=  117  cumulative bins 18/18
+seed  35  pass  txn=  113  cumulative bins 18/18
+seed  36  pass  txn=  146  cumulative bins 18/18
+seed  37  pass  txn=  115  cumulative bins 18/18
+seed  38  pass  txn=   95  cumulative bins 18/18
+seed  39  pass  txn=   89  cumulative bins 18/18
+seed  40  pass  txn=   94  cumulative bins 18/18
+seed  41  pass  txn=  127  cumulative bins 18/18
+seed  42  pass  txn=  100  cumulative bins 18/18
+seed  43  pass  txn=  119  cumulative bins 18/18
+seed  44  pass  txn=   98  cumulative bins 18/18
+seed  45  pass  txn=  106  cumulative bins 18/18
+seed  46  pass  txn=  105  cumulative bins 18/18
+seed  47  pass  txn=  104  cumulative bins 18/18
+seed  48  pass  txn=   97  cumulative bins 18/18
+seed  49  pass  txn=  108  cumulative bins 18/18
+seed  50  pass  txn=  111  cumulative bins 18/18
+seed  51  pass  txn=  125  cumulative bins 18/18
+seed  52  pass  txn=  111  cumulative bins 18/18
+seed  53  pass  txn=   97  cumulative bins 18/18
+seed  54  pass  txn=  101  cumulative bins 18/18
+seed  55  pass  txn=  117  cumulative bins 18/18
+seed  56  pass  txn=  110  cumulative bins 18/18
+seed  57  pass  txn=  107  cumulative bins 18/18
+seed  58  pass  txn=  111  cumulative bins 18/18
+seed  59  pass  txn=   89  cumulative bins 18/18
+seed  60  pass  txn=  130  cumulative bins 18/18
+seed  61  pass  txn=   95  cumulative bins 18/18
+seed  62  pass  txn=  117  cumulative bins 18/18
+seed  63  pass  txn=  108  cumulative bins 18/18
+seed  64  pass  txn=  111  cumulative bins 18/18
+seed  65  pass  txn=  103  cumulative bins 18/18
+seed  66  pass  txn=  125  cumulative bins 18/18
+seed  67  pass  txn=  100  cumulative bins 18/18
+seed  68  pass  txn=  103  cumulative bins 18/18
+seed  69  pass  txn=  130  cumulative bins 18/18
+seed  70  pass  txn=  103  cumulative bins 18/18
+seed  71  pass  txn=  106  cumulative bins 18/18
+seed  72  pass  txn=  111  cumulative bins 18/18
+seed  73  pass  txn=  122  cumulative bins 18/18
+seed  74  pass  txn=  170  cumulative bins 18/18
+seed  75  pass  txn=  128  cumulative bins 18/18
+seed  76  pass  txn=  123  cumulative bins 18/18
+seed  77  pass  txn=  114  cumulative bins 18/18
+seed  78  pass  txn=  122  cumulative bins 18/18
+seed  79  pass  txn=  146  cumulative bins 18/18
+seed  80  pass  txn=  121  cumulative bins 18/18
+seed  81  pass  txn=  109  cumulative bins 18/18
+seed  82  pass  txn=  107  cumulative bins 18/18
+seed  83  pass  txn=  121  cumulative bins 18/18
+seed  84  pass  txn=   90  cumulative bins 18/18
+seed  85  pass  txn=  133  cumulative bins 18/18
+seed  86  pass  txn=  129  cumulative bins 18/18
+seed  87  pass  txn=  103  cumulative bins 18/18
+seed  88  pass  txn=  107  cumulative bins 18/18
+seed  89  pass  txn=  135  cumulative bins 18/18
+seed  90  pass  txn=  107  cumulative bins 18/18
+seed  91  pass  txn=  114  cumulative bins 18/18
+seed  92  pass  txn=   91  cumulative bins 18/18
+seed  93  pass  txn=  112  cumulative bins 18/18
+seed  94  pass  txn=  109  cumulative bins 18/18
+seed  95  pass  txn=   87  cumulative bins 18/18
+seed  96  pass  txn=  114  cumulative bins 18/18
+seed  97  pass  txn=  108  cumulative bins 18/18
+seed  98  pass  txn=  120  cumulative bins 18/18
+seed  99  pass  txn=   92  cumulative bins 18/18
+seed 100  pass  txn=  124  cumulative bins 18/18
+
+==============================================================
+seeds run             : 100
+transactions pushed   : 11415
+assertion checks      : 1266336
+assertion failures    : 0
+scoreboard mismatches : 0
+coverage (union)      : 18/18 = 100.0%
+closure seed          : 2
+failing seeds         : none
+==============================================================
